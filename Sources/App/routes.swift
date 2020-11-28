@@ -21,6 +21,10 @@ func routes(_ app: Application) throws {
         let data = try req.content.decode(InfoData.self)
         return InfoResponse(superheroName: "Super\(data.name)")
     }
+    
+    app.get("v1", "StudentLocation") { req -> StudentLocationResults in
+        return StudentLocationResults.sampleValue
+    }
 
     try app.register(collection: TodoController())
 }
