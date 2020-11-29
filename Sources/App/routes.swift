@@ -25,8 +25,6 @@ func routes(_ app: Application) throws {
     app.get("v1", "StudentLocation") { req -> StudentLocationResults in
         return StudentLocationResults.sampleValue
     }
-
-    try app.register(collection: TodoController())
 }
 
 struct InfoData: Content {
