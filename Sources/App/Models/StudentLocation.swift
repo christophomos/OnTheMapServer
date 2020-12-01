@@ -11,15 +11,17 @@
 //  Created by Chris Clark on 2020/11/27.
 //
 
-import Foundation
 import Vapor
+import Fluent
 
+// DTO (data transfer object)
 struct StudentLocationResults: Content {
     let results: [StudentLocation]
     
     static let sampleValue = StudentLocationResults(results: [StudentLocation.sampleValue])
 }
 
+// DTO (data transfer object)
 struct StudentLocation: Content {
     let createdAt: String
     let firstName: String
@@ -43,6 +45,57 @@ struct StudentLocation: Content {
         objectId: "JhOtcRkxsh",
         uniqueKey: "996618664",
         updatedAt: "2015-03-09T22:04:50.315Z")
+}
+
+final class StudentLocationModel: Model {
+    
+    init() {}
+    
+    init(
+        createdAt: String,
+        firstName: String,
+        lastName: String,
+        latitude: Double,
+        longitude: Double,
+        mapString: String,
+        mediaURL: String,
+        uniqueKey: String,
+        updatedAt: String) {
+        
+        self.createdAt = createdAt
+        self.firstName = firstName
+        self.lastName = lastName
+        self.latitude = latitude
+        self.longitude = longitude
+        self.mapString = mapString
+        self.mediaURL = mediaURL
+        self.uniqueKey = uniqueKey
+        self.updatedAt = updatedAt
+    }
+    
+    static let schema = "student_locations"
+    
+    @ID
+    var id: UUID?
+    
+    @Field(key: "created_at")
+    var createdAt: String
+    @Field(key: "first_name")
+    var firstName: String
+    @Field(key: "last_name")
+    var lastName: String
+    @Field(key: "latitude")
+    var latitude: Double
+    @Field(key: "longitude")
+    var longitude: Double
+    @Field(key: "map_string")
+    var mapString: String
+    @Field(key: "media_url")
+    var mediaURL: String
+    @Field(key: "unique_key")
+    var uniqueKey: String
+    @Field(key: "updated_at")
+    var updatedAt: String
 }
 
 /*
