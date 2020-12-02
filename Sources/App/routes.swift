@@ -25,6 +25,18 @@ func routes(_ app: Application) throws {
     app.get("v1", "StudentLocation") { req -> StudentLocationResults in
         return StudentLocationResults.sampleValue
     }
+    
+    // 1
+    app.post("v1", "StudentLocation") { req -> EventLoopFuture<StudentLocation> in
+      // 2
+      let studentLocation = try req.content.decode(StudentLocation.self)
+        let studentLocationModel = StudentLocationModel(studentLocation: studentLocation)
+      // 3
+      return studentLocationModel.save(on: req.db).map {
+        // 4
+        StudentLocation(studentLocationModel: studentLocationModel)
+      }
+    }
 }
 
 struct InfoData: Content {

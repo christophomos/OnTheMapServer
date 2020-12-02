@@ -34,6 +34,45 @@ struct StudentLocation: Content {
     let uniqueKey: String
     let updatedAt: String
     
+    // Memberwise initializer
+    init(
+        createdAt: String,
+        firstName: String,
+        lastName: String,
+        latitude: Double,
+        longitude: Double,
+        mapString: String,
+        mediaURL: String,
+        objectId: String,
+        uniqueKey: String,
+        updatedAt: String) {
+        
+        self.createdAt = createdAt
+        self.firstName = firstName
+        self.lastName = lastName
+        self.latitude = latitude
+        self.longitude = longitude
+        self.mapString = mapString
+        self.mediaURL = mediaURL
+        self.objectId = objectId
+        self.uniqueKey = uniqueKey
+        self.updatedAt = updatedAt
+    }
+    
+    // Converts id to objectId
+    init(studentLocationModel: StudentLocationModel) {
+        self.createdAt = studentLocationModel.createdAt
+        self.firstName = studentLocationModel.firstName
+        self.lastName = studentLocationModel.lastName
+        self.latitude = studentLocationModel.latitude
+        self.longitude = studentLocationModel.longitude
+        self.mapString = studentLocationModel.mapString
+        self.mediaURL = studentLocationModel.mediaURL
+        self.objectId = studentLocationModel.id?.uuidString ?? "N/A"
+        self.uniqueKey = studentLocationModel.uniqueKey
+        self.updatedAt = studentLocationModel.updatedAt
+    }
+    
     static let sampleValue = StudentLocation(
         createdAt: "2015-02-25T01:10:38.103Z",
         firstName: "Jarrod",
@@ -73,6 +112,19 @@ final class StudentLocationModel: Model {
         self.updatedAt = updatedAt
     }
     
+    // Ignores StudentLocation.objectId
+    init(studentLocation: StudentLocation) {
+        self.createdAt = studentLocation.createdAt
+        self.firstName = studentLocation.firstName
+        self.lastName = studentLocation.lastName
+        self.latitude = studentLocation.latitude
+        self.longitude = studentLocation.longitude
+        self.mapString = studentLocation.mapString
+        self.mediaURL = studentLocation.mediaURL
+        self.uniqueKey = studentLocation.uniqueKey
+        self.updatedAt = studentLocation.updatedAt
+    }
+    
     static let schema = "student_locations"
     
     @ID
@@ -107,7 +159,7 @@ final class StudentLocationModel: Model {
             "lastName": "Parkes",
             "latitude": 34.7303688,
             "longitude": -86.5861037,
-            "mapString": "Huntsville, Alabama ",
+            "mapString": "Huntsville, Alabama",
             "mediaURL": "https://www.linkedin.com/in/jarrodparkes",
             "objectId": "JhOtcRkxsh",
             "uniqueKey": "996618664",
